@@ -27,12 +27,12 @@ pub struct ServiceAccount {
 impl ServiceAccount {
     pub(crate) fn get() -> Self {
         dotenv::dotenv().ok();
-        let path = std::env::var("SERVICE_ACCOUNT")
-            .expect("SERVICE_ACCOUNT environment parameter required");
-        let file = std::fs::read_to_string(path).expect("SERVICE_ACCOUNT file not found");
+        let path = std::env::var("GOOGLE_APPLICATION_CREDENTIALS")
+            .expect("GOOGLE_APPLICATION_CREDENTIALS environment parameter required");
+        let file = std::fs::read_to_string(path).expect("GOOGLE_APPLICATION_CREDENTIALS file not found");
         let account: Self = serde_json::from_str(&file).expect("serivce account file not valid");
         if account.r#type != "service_account" {
-            panic!("`type` paramter of `SERVICE_ACCOUNT` variable is not 'service_account'");
+            panic!("`type` paramter of `GOOGLE_APPLICATION_CREDENTIALS` variable is not 'service_account'");
         }
         account
     }
